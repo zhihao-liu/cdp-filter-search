@@ -1,0 +1,2 @@
+npm install node-geocoder
+npm install async-foreach
