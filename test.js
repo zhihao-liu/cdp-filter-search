@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config');
 
 async function main() {
-  const c = new filter.Condition('hashtag', 'food');
+  const c = new filter.Condition('keyword', 'food', 'exact');
   const f = new filter.Filter('$or');
   f.addCondition(c);
 
@@ -17,8 +17,8 @@ async function main() {
   const q = new filter.Query(dbs, f);
 
   const res = {};
-  res.instagram = await q.findInstagram(50);
-  res.twitter = await q.findTwitter(50);
+  res.instagram = await q.findInstagram(100);
+  res.twitter = await q.findTwitter(100);
 
   console.log(res.instagram.length, res.twitter.length);
 }
