@@ -3,9 +3,10 @@
 const filter = require('./lib/filter');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config');
+const schema = require('./lib/schema');
 
 async function main() {
-  const c = new filter.Condition('keyword', 'food', 'exact');
+  const c = new filter.Condition('$keyword', 'food', 'exact');
   const f = new filter.Filter('$or');
   f.addCondition(c);
 
@@ -14,13 +15,9 @@ async function main() {
     dbs[dataSource] = await MongoClient.connect(config.mongoConnectionUrl[dataSource]);
   }
 
-  const q = new filter.Query(dbs, f);
+  const mongoSchema = await schema.getMongoSchema(dbs.twitter.collection('tweets'));
 
-  const res = {};
-  res.instagram = await q.findInstagram(100);
-  res.twitter = await q.findTwitter(100);
-
-  console.log(res.instagram.length, res.twitter.length);
+  console.log(JSON.stringify(mongoSchema, null, 2));
 }
 
 main();

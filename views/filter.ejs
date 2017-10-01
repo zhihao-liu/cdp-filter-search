@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Tweet-On-Map</title>
+    <style>
+      html, body{
+          height: 100%;
+          margin: 0;
+          padding:0;
+      }
+    </style>
+	
+ <script type="text/javascript">
+
+function getUrlVars() 
+{
+   var vars = {};
+   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+      function(m,key,value) {
+           vars[key] = value;
+      });
+      return vars;
+}
+
+var getValues=function()
+{
+    var status = getUrlVars()["status"];
+    if(status == 0) 
+        alert("Oops! 0 record(s) found");
+    if(status == 1) 
+		alert("Oops! No country.");
+    if(status == 2) 
+		alert("Oops! No value.");
+	var records = getUrlVars()["records"];
+	if(records!=null)
+	{
+	    if(records <= 1)
+    		alert(records+" JSon object is found.");
+		else
+    		alert(records+" JSon objects are found.");
+	}
+	
+
+}
+window.onload=getValues;
+</script>	
+	
+	</head>
+    <body>
+         <form action="/search" method="post">
+		 <br>
+         <label for="City"> City:</label> <input type="TEXT" name="city" size="10">		 
+         <label for="Country"> Country:</label> <input type="TEXT" name="country" size="10"><br><br>	
+         <label for="Key"> Key:</label> <input type="TEXT" name="key1" size="10">		 
+         <label for="Value"> Value:</label> <input type="TEXT" name="value1" size="10">		 
+         <label for="Key"> Key:</label> <input type="TEXT" name="key2" size="10">		 
+         <label for="Value"> Value:</label> <input type="TEXT" name="value2" size="10">		 
+         <label for="Key"> Key:</label> <input type="TEXT" name="key3" size="10">		 
+         <label for="Value"> Value:</label> <input type="TEXT" name="value3" size="10">		 
+         <label for="Key"> Key:</label> <input type="TEXT" name="key4" size="10">		 
+         <label for="Value"> Value:</label> <input type="TEXT" name="value4" size="10">		 
+         <label for="Key"> Key:</label> <input type="TEXT" name="key5" size="10">		 
+         <label for="Value"> Value:</label> <input type="TEXT" name="value5" size="10">		 
+         <br><br>
+         <label for="and_or"> AND/OR:</label>
+             <select class="selectpicker" data-style="btn-info" name="and_or">
+                 <option value="Or">OR</option>
+                 <option value="And">AND</option>
+             </select>
+		 
+		 <input type="submit" value="Search" >
+        </form>
+    <body>
+</html>
