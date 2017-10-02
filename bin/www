@@ -1,0 +1,12 @@
+'use strict';
+
+const app = require('../app');
+const http = require('http');
+const config = require('../config/app-config');
+
+const server = http.createServer(app);
+const port = config.serverPort;
+server.listen(port);
+
+server.on('error', err => console.log(`Error when creating server: ${err}`));
+server.on('listening', () => console.log(`Server listening on port ${port}`));

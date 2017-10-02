@@ -4,6 +4,7 @@ const filter = require('./lib/filter');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config');
 const schema = require('./lib/schema');
+const _ = require('underscore');
 
 async function main() {
   const c = new filter.Condition('$keyword', 'food', 'exact');
@@ -15,9 +16,9 @@ async function main() {
     dbs[dataSource] = await MongoClient.connect(config.mongoConnectionUrl[dataSource]);
   }
 
-  const mongoSchema = await schema.getMongoSchema(dbs.twitter.collection('tweets'));
+  const mongoSchema = await schema.getMongoSchema(dbs.instagram.collection('posts'));
 
-  console.log(JSON.stringify(mongoSchema, null, 2));
+  console.log(schema.getAllPropPaths(mongoSchema));
 }
 
 main();

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Filter Search - City Digital Pulse</title>
+  </head>
+
+  <body>
+    <h1>Filter Search - City Digital Pulse</h1>
+
+    <form action='/result' method='post'>
+      <ul>
+        <% for(let i = 1; i <= 5; ++i) { %>
+        <li>
+          <label for='FILTER-PROPERTY-<%= i %>'>Property: </label>
+          <select class='selectpicker' id='FILTER-PROPERTY-<%= i %>' name='filterProperty<%= i %>'>
+             <option value='null'>-</option>
+             <option value='$keyword'>Keyword</option>
+             <option value='$hashtag'>Hashtag</option>
+             <option value='$location'>Location</option>
+          </select>
+
+          <label for='FILTER-QUERY-<%= i %>'>Query: </label>
+          <input type='text' id='FILTER-QUERY-<%= i %>' />
+
+        </li>
+        <% } %>
+      <ul>
+
+      <br>
+      <label for='LOGICAL-OPERATOR'>AND/OR: </label>
+      <select class='selectpicker' id='LOGICAL-OPERATOR' name='logicalOperator'>
+         <option value='and'>AND</option>
+         <option value='or'>OR</option>
+      </select>
+
+      <br>
+      <label>Data source: </label>
+      <input type='checkbox' id='INCLUDE-INSTAGRAM' />
+      <label for='INCLUDE-INSTAGRAM'>Instagram</label>
+      <input type='checkbox' id='INCLUDE-TWITTER' />
+      <label for='INCLUDE-TWITTER'>Twitter</label>
+
+      <br><br>
+      <input type='submit' value='Search' />
+    </form>
+  </body>
+</html>

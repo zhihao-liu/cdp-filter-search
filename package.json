@@ -10,6 +10,10 @@
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
     "express": "^4.15.5",
-    "mongodb": "^2.2.31"
+    "mongodb": "^2.2.31",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
