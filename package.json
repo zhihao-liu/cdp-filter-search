@@ -4,16 +4,33 @@
   "author": "Zhihao Liu",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start-dev": "nodemon ./server/bin/www.js --exec babel-node",
+    "start-prod": "node ./build/bin/www.js",
+    "build": "babel lib server -d build"
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-es2015",
+      "babel-preset-react"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
     "express": "^4.15.5",
     "mongodb": "^2.2.31",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router": "^4.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "nodemon": "^1.12.1",
+    "webpack": "^3.6.0"
   }
 }

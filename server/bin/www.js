@@ -1,11 +1,10 @@
-'use strict';
+import app from '../app.js';
 
-const app = require('../app');
-const http = require('http');
-const config = require('../config/app-config');
+import http from 'http';
+import { defaultServerPort } from '../server.config.js';
 
 const server = http.createServer(app);
-const port = config.serverPort;
+const port = process.env.PORT || defaultServerPort;
 server.listen(port);
 
 server.on('error', err => console.log(`Error when creating server: ${err}`));

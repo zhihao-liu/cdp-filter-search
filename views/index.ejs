@@ -1,61 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Filter Search - City Digital Pulse</title>
+    <meta charset="utf-8" />
     <link rel='stylesheet' href='css/style.css'>
-
-    <script type="text/javascript">const locals = <%- JSON.stringify(locals) %>;</script>
-    <script src='js/ui.js'></script>
+    <title>Filter Search - City Digital Pulse</title>
   </head>
 
   <body>
-    <h1>Filter Search - City Digital Pulse</h1>
-
-    <form action='/result' method='post'>
-      <ul>
-        <% for(let i = 1; i <= locals.numConditions; ++i) { %>
-        <li id='li-condition-<%- i %>'>
-          <label id='label-condition-field-<%- i %>'>Field: 
-            <select id='select-condition-field-<%- i %>' name='conditionField<%- i %>'>
-               <option value='null'>-</option>
-               <option value='$keyword'>Keyword</option>
-               <option value='$hashtag'>Hashtag</option>
-               <option value='$place'>Place</option>
-               <option value='$other'>Other</option>
-            </select>
-          </label>
-
-          <label>Query: 
-            <input id='textbox-condition-query-<%- i %>' name='conditionQuery<%- i %>' />
-          </label>
-
-        </li>
-        <% } %>
-      <ul>
-
-      <br>
-      <label>AND/OR: 
-        <select id='select-logical-operator' name='logicalOperator'>
-           <option value='$and'>AND</option>
-           <option value='$or'>OR</option>
-        </select>
-      </label>
-
-      <br>
-      <span>Data source: </span>
-      <% for (const dataSrc of locals.dataSources) { %>
-        <label>
-          <input type='checkbox' id='checkbox-include-<%- dataSrc %>' />
-          <%- capitalize(dataSrc) %>
-        </label>      
-      <% } %>
-
-      <br><br>
-      <input type='submit' value='Search' />
-    </form>
+    <div id='root'></div>
+    <script>const locals = <%- JSON.stringify(locals) %></script>
+    <script src='js/bundle.js'></script>
   </body>
-
-  <% function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  } %>
 </html>
