@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('underscore');
 
 function buildObjSchema(obj, schema, ignoredProps = []) {

@@ -1,8 +1,10 @@
+'use strict';
+
 const defaultResultLimit = 1000;
 
 const earliestDate = {
-  instagram: new Date('2010-10-01 UTC'),
-  twitter: new Date('2016-06-25 UTC')
+  instagram: new Date('2010-10-01UTC'),
+  twitter: new Date('2016-06-25UTC')
 };
 
 module.exports.Condition = class {
@@ -10,6 +12,11 @@ module.exports.Condition = class {
     this.field = field || {};
     this.value = value || {};
     this.option = option || {};
+
+    // this.query = {
+    //   instagram: this.queryInstagram.bind(this),
+    //   twitter: this.queryTwitter.bind(this)
+    // };
   }
 
   get queryInstagram() {
@@ -59,6 +66,11 @@ module.exports.Filter = class {
   constructor(logicalOperator) {
     this.logicalOperator = logicalOperator || {};
     this.conditionList = [];
+
+    // this.query = {
+    //   instagram: this.queryInstagram.bind(this),
+    //   twitter: this.queryTwitter.bind(this)
+    // };
   }
 
   addCondition(conditions) {
@@ -67,10 +79,14 @@ module.exports.Filter = class {
   }
 
   get queryInstagram() {
+    if (this.conditionList.length === 0) return {};
+
     return {[this.logicalOperator]: this.conditionList.map(item => item.queryInstagram)};
   }
 
   get queryTwitter() {
+    if (this.conditionList.length === 0) return {};
+
     return {[this.logicalOperator]: this.conditionList.map(item => item.queryTwitter)};
   }
 };
@@ -80,6 +96,11 @@ module.exports.Query = class {
     this.dbs = dbs || {};
     this.filter = filter || {};
     this.dateRange = dateRange || {};
+
+    this.find = {
+      instagram: this.findInstagram.bind(this),
+      twitter: this.findTwitter.bind(this)
+    }
   }
 
   async findInstagram(limit = defaultResultLimit) {
@@ -93,8 +114,6 @@ module.exports.Query = class {
         {'info.deviceTimestamp': {$gte: timestampFrom, $lt: timestampTo}},
         {'info.deviceTimestamp': {$gte: timestampFrom / 1000, $lt: timestampTo / 1000}}
     ]};
-
-    console.log(JSON.stringify(dateQuery));
 
     return await this.dbs.instagram.collection('posts')
       .find({$and: [dateQuery, this.filter.queryInstagram]})

@@ -1,3 +1,5 @@
+'use strict';
+
 const React = require('react');
 
 class LabeledSelect extends React.Component {
@@ -16,7 +18,7 @@ class LabeledSelect extends React.Component {
     return (
       <label>{this.props.text}
         <select value={this.props.value} name={this.props.name}
-                onChange={this.props.onChange && this.props.onChange.bind(this)}>
+                onChange={this.props.onChange && this.props.onChange}>
           {options}
         </select>
       </label>
@@ -26,7 +28,8 @@ class LabeledSelect extends React.Component {
 
 LabeledSelect.defaultProps = {
   text: '',
-  optionMap: {}
+  optionMap: {},
+  onChange: null
 };
 
 module.exports = LabeledSelect;

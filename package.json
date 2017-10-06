@@ -7,13 +7,11 @@
     "start-dev": "webpack -w & nodemon ./bin/www",
     "start-prod": "node ./bin/www",
     "build": "webpack -p",
-    "deploy": "pm2 start ./bin/www --name cdp-filter-search"
-  },
-  "babel": {
-    "presets": [
-      "babel-preset-es2015",
-      "babel-preset-react"
-    ]
+    "deploy": "pm2 start ./bin/www --name cdp-filter-search",
+    "deploy-start": "pm2 start cdp-filter-search",
+    "deploy-stop": "pm2 stop cdp-filter-search",
+    "deploy-restart": "pm2 restart cdp-filter-search",
+    "deploy-delete": "pm2 delete cdp-filter-search"
   },
   "dependencies": {
     "body-parser": "^1.18.2",

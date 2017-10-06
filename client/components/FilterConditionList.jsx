@@ -1,3 +1,5 @@
+'use strict';
+
 const React = require('react');
 const FilterCondition = require('./FilterCondition.jsx');
 const clientConfig = require('../../config/client.config.js');
@@ -18,7 +20,7 @@ module.exports = class extends React.Component {
         nameSelectedField: `selectedField${i}`,
         nameSelectedOtherField: `selectedOtherField${i}`,
         nameCheckExactMatch: `exactMatch${i}`,
-        nameQuery: `query${i}`
+        nameQuery: `queryString${i}`
       };
 
       conditionList.push(<FilterCondition {...props} />);

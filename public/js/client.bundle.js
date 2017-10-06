@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
-} else {
   module.exports = __webpack_require__(19);
+} else {
+  module.exports = __webpack_require__(20);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -565,6 +565,43 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+const React = __webpack_require__(1);
+
+class LabeledInput extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const isLabeledAfter = this.props.labelPosition === 'after';
+
+    return React.createElement(
+      'label',
+      null,
+      !isLabeledAfter && this.props.text,
+      React.createElement('input', { type: this.props.type, name: this.props.name,
+        required: this.props.required, pattern: this.props.pattern,
+        defaultChecked: this.props.defaultChecked,
+        defaultValue: this.props.defaultValue }),
+      isLabeledAfter && this.props.text
+    );
+  }
+}
+
+LabeledInput.defaultProps = {
+  text: '',
+  labelPosition: 'before'
+};
+
+module.exports = LabeledInput;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -577,7 +614,7 @@ module.exports = warning;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(3);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(8);
+  var ReactPropTypesSecret = __webpack_require__(9);
   var loggedTypeFailures = {};
 }
 
@@ -628,7 +665,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -646,7 +683,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -685,7 +722,21 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 10 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  dataSources: ['instagram', 'twitter'],
+
+  initialNumConditions: 5,
+  defaultResultLimit: 1000
+};
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -766,7 +817,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -783,8 +834,6 @@ module.exports = EventListener;
 /*eslint-disable no-self-compare */
 
 
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -815,7 +864,7 @@ function shallowEqual(objA, objB) {
     return true;
   }
 
-  if ((typeof objA === 'undefined' ? 'undefined' : _typeof(objA)) !== 'object' || objA === null || (typeof objB === 'undefined' ? 'undefined' : _typeof(objB)) !== 'object' || objB === null) {
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
     return false;
   }
 
@@ -839,7 +888,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,7 +903,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(22);
+var isTextNode = __webpack_require__(23);
 
 /*eslint-disable no-bitwise */
 
@@ -882,7 +931,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -912,7 +961,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -955,86 +1004,68 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-
-var LabeledInput = function (_React$Component) {
-  _inherits(LabeledInput, _React$Component);
-
-  function LabeledInput(props) {
-    _classCallCheck(this, LabeledInput);
-
-    return _possibleConstructorReturn(this, (LabeledInput.__proto__ || Object.getPrototypeOf(LabeledInput)).call(this, props));
-  }
-
-  _createClass(LabeledInput, [{
-    key: 'render',
-    value: function render() {
-      var isLabeledAfter = this.props.labelPosition === 'after';
-
-      return React.createElement(
-        'label',
-        null,
-        !isLabeledAfter && this.props.text,
-        React.createElement('input', { type: this.props.type, name: this.props.name }),
-        isLabeledAfter && this.props.text
-      );
-    }
-  }]);
-
-  return LabeledInput;
-}(React.Component);
-
-LabeledInput.defaultProps = {
-  text: '',
-  labelPosition: 'before'
-};
-
-module.exports = LabeledInput;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-  dataSources: ['instagram', 'twitter'],
-  initialNumConditions: 5,
-  defaultResultLimit: 1000
-};
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var React = __webpack_require__(1);
-var ReactDOM = __webpack_require__(20);
-var IndexPage = __webpack_require__(34);
+const React = __webpack_require__(1);
 
-window.onload = function () {
+class LabeledSelect extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let options = [];
+    for (const option in this.props.optionMap) {
+      options.push(React.createElement(
+        'option',
+        { value: option, key: option },
+        this.props.optionMap[option]
+      ));
+    }
+
+    return React.createElement(
+      'label',
+      null,
+      this.props.text,
+      React.createElement(
+        'select',
+        { value: this.props.value, name: this.props.name,
+          onChange: this.props.onChange && this.props.onChange },
+        options
+      )
+    );
+  }
+}
+
+LabeledSelect.defaultProps = {
+  text: '',
+  optionMap: {},
+  onChange: null
+};
+
+module.exports = LabeledSelect;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+const React = __webpack_require__(1);
+const ReactDOM = __webpack_require__(21);
+const IndexPage = __webpack_require__(35);
+
+window.onload = () => {
   ReactDOM.render(React.createElement(IndexPage, null), document.getElementById('root'));
 };
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1064,7 +1095,7 @@ module.exports={Children:{map:S.map,forEach:S.forEach,count:S.count,toArray:S.to
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1089,7 +1120,7 @@ var require$$0 = __webpack_require__(6);
 var emptyObject = __webpack_require__(5);
 var invariant = __webpack_require__(3);
 var emptyFunction = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(8);
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2770,7 +2801,7 @@ module.exports = ReactEntry;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2808,15 +2839,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(21);
+  module.exports = __webpack_require__(22);
 } else {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(25);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2830,7 +2861,7 @@ if (process.env.NODE_ENV === 'production') {
  LICENSE file in the root directory of this source tree.
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1);__webpack_require__(3);var l=__webpack_require__(9),n=__webpack_require__(4),ba=__webpack_require__(10),ca=__webpack_require__(2),da=__webpack_require__(5),ea=__webpack_require__(11),fa=__webpack_require__(12),ha=__webpack_require__(13),ia=__webpack_require__(14);
+var aa=__webpack_require__(1);__webpack_require__(3);var l=__webpack_require__(10),n=__webpack_require__(4),ba=__webpack_require__(12),ca=__webpack_require__(2),da=__webpack_require__(5),ea=__webpack_require__(13),fa=__webpack_require__(14),ha=__webpack_require__(15),ia=__webpack_require__(16);
 function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -3079,7 +3110,7 @@ unstable_deferredUpdates:Xj.deferredUpdates,flushSync:Xj.flushSync,__SECRET_INTE
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3094,7 +3125,7 @@ unstable_deferredUpdates:Xj.deferredUpdates,flushSync:Xj.flushSync,__SECRET_INTE
  * @typechecks
  */
 
-var isNode = __webpack_require__(23);
+var isNode = __webpack_require__(24);
 
 /**
  * @param {*} object The object to check.
@@ -3107,7 +3138,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3127,18 +3158,16 @@ module.exports = isTextNode;
  * @return {boolean} Whether or not the object is a DOM node.
  */
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 function isNode(object) {
   var doc = object ? object.ownerDocument || object : document;
   var defaultView = doc.defaultView || window;
-  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
 }
 
 module.exports = isNode;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3160,21 +3189,21 @@ if (process.env.NODE_ENV !== "production") {
 
 var react = __webpack_require__(1);
 var invariant = __webpack_require__(3);
-var ExecutionEnvironment = __webpack_require__(9);
+var ExecutionEnvironment = __webpack_require__(10);
 var _assign = __webpack_require__(4);
-var EventListener = __webpack_require__(10);
+var EventListener = __webpack_require__(12);
 var require$$0 = __webpack_require__(6);
-var hyphenateStyleName = __webpack_require__(25);
+var hyphenateStyleName = __webpack_require__(26);
 var emptyFunction = __webpack_require__(2);
-var camelizeStyleName = __webpack_require__(27);
-var performanceNow = __webpack_require__(29);
-var propTypes = __webpack_require__(31);
+var camelizeStyleName = __webpack_require__(28);
+var performanceNow = __webpack_require__(30);
+var propTypes = __webpack_require__(32);
 var emptyObject = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(7);
-var shallowEqual = __webpack_require__(11);
-var containsNode = __webpack_require__(12);
-var focusNode = __webpack_require__(13);
-var getActiveElement = __webpack_require__(14);
+var checkPropTypes = __webpack_require__(8);
+var shallowEqual = __webpack_require__(13);
+var containsNode = __webpack_require__(14);
+var focusNode = __webpack_require__(15);
+var getActiveElement = __webpack_require__(16);
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -20367,7 +20396,7 @@ module.exports = ReactDOMFiberEntry;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20382,7 +20411,7 @@ module.exports = ReactDOMFiberEntry;
 
 
 
-var hyphenate = __webpack_require__(26);
+var hyphenate = __webpack_require__(27);
 
 var msPattern = /^ms-/;
 
@@ -20409,7 +20438,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20445,7 +20474,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20460,7 +20489,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(28);
+var camelize = __webpack_require__(29);
 
 var msPattern = /^-ms-/;
 
@@ -20488,7 +20517,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20523,7 +20552,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20538,7 +20567,7 @@ module.exports = camelize;
  * @typechecks
  */
 
-var performance = __webpack_require__(30);
+var performance = __webpack_require__(31);
 
 var performanceNow;
 
@@ -20560,7 +20589,7 @@ if (performance.now) {
 module.exports = performanceNow;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20575,7 +20604,7 @@ module.exports = performanceNow;
 
 
 
-var ExecutionEnvironment = __webpack_require__(9);
+var ExecutionEnvironment = __webpack_require__(10);
 
 var performance;
 
@@ -20586,7 +20615,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = performance || {};
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20611,17 +20640,17 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(32)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(33)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(33)();
+  module.exports = __webpack_require__(34)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20639,8 +20668,8 @@ var invariant = __webpack_require__(3);
 var warning = __webpack_require__(6);
 var assign = __webpack_require__(4);
 
-var ReactPropTypesSecret = __webpack_require__(8);
-var checkPropTypes = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(9);
+var checkPropTypes = __webpack_require__(8);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -21171,7 +21200,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21186,7 +21215,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 var emptyFunction = __webpack_require__(2);
 var invariant = __webpack_require__(3);
-var ReactPropTypesSecret = __webpack_require__(8);
+var ReactPropTypesSecret = __webpack_require__(9);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -21236,110 +21265,55 @@ module.exports = function() {
 
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-var FilterConditionList = __webpack_require__(35);
-var DataSourceOption = __webpack_require__(38);
-
-module.exports = function (_React$Component) {
-  _inherits(_class, _React$Component);
-
-  function _class() {
-    _classCallCheck(this, _class);
-
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-  }
-
-  _createClass(_class, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'form',
-        { action: 'result', method: 'post' },
-        React.createElement(FilterConditionList, null),
-        React.createElement('br', null),
-        React.createElement(DataSourceOption, null),
-        React.createElement('br', null),
-        React.createElement('input', { type: 'submit', value: 'Search' })
-      );
-    }
-  }]);
-
-  return _class;
-}(React.Component);
-
-/***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const React = __webpack_require__(1);
+const LabeledSelect = __webpack_require__(17);
+const LabeledInput = __webpack_require__(7);
+const DateRangeOption = __webpack_require__(36);
+const FilterConditionList = __webpack_require__(37);
+const DataSourceOption = __webpack_require__(39);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+const { defaultResultLimit } = __webpack_require__(11);
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-var FilterCondition = __webpack_require__(36);
-var clientConfig = __webpack_require__(16);
-
-module.exports = function (_React$Component) {
-  _inherits(_class, _React$Component);
-
-  function _class(props) {
-    _classCallCheck(this, _class);
-
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-    _this.state = {
-      numItems: clientConfig.initialNumConditions
+module.exports = class extends React.Component {
+  render() {
+    const andOrMap = {
+      '$and': 'AND',
+      '$or': 'OR'
     };
-    return _this;
+
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h1',
+        null,
+        'Filter Search - City Digital Pulse 2.0'
+      ),
+      React.createElement(
+        'form',
+        { action: '/result', method: 'post' },
+        React.createElement(DateRangeOption, null),
+        React.createElement(FilterConditionList, null),
+        React.createElement('br', null),
+        React.createElement(LabeledSelect, { text: 'AND/OR', optionMap: andOrMap, name: 'andOrOption' }),
+        React.createElement('br', null),
+        React.createElement(DataSourceOption, null),
+        React.createElement('br', null),
+        React.createElement('input', { type: 'submit', value: 'Search' }),
+        React.createElement('br', null),
+        React.createElement(LabeledInput, { text: 'Result limit: ', name: 'resultLimit',
+          defaultValue: defaultResultLimit,
+          required: true, pattern: '\\d+' })
+      )
+    );
   }
-
-  _createClass(_class, [{
-    key: 'render',
-    value: function render() {
-      var conditionList = [];
-      for (var i = 1; i <= this.state.numItems; ++i) {
-        var props = {
-          key: 'filterCondition' + i,
-          nameSelectedField: 'selectedField' + i,
-          nameSelectedOtherField: 'selectedOtherField' + i,
-          nameCheckExactMatch: 'exactMatch' + i,
-          nameQuery: 'query' + i
-        };
-
-        conditionList.push(React.createElement(FilterCondition, props));
-      }
-
-      return React.createElement(
-        'ul',
-        { className: 'FilterConditionList' },
-        conditionList
-      );
-    }
-  }]);
-
-  return _class;
-}(React.Component);
+};
 
 /***/ }),
 /* 36 */
@@ -21348,97 +21322,24 @@ module.exports = function (_React$Component) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const React = __webpack_require__(1);
+const LabeledInput = __webpack_require__(7);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-var LabeledSelect = __webpack_require__(37);
-var LabeledInput = __webpack_require__(15);
-
-module.exports = function (_React$Component) {
-  _inherits(_class, _React$Component);
-
-  function _class(props) {
-    _classCallCheck(this, _class);
-
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-    _this.state = {
-      selectedField: '$null'
-    };
-
-    _this.handleSelectedFieldChange = _this.handleSelectedFieldChange.bind(_this);
-    return _this;
+module.exports = class extends React.Component {
+  render() {
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'span',
+        null,
+        'Date range: '
+      ),
+      React.createElement(LabeledInput, { type: 'date', text: 'From ', name: 'fromDate' }),
+      React.createElement(LabeledInput, { type: 'date', text: ' To ', name: 'toDate' })
+    );
   }
-
-  _createClass(_class, [{
-    key: 'render',
-    value: function render() {
-      var fieldOptionMap = {
-        '$null': '-',
-        '$keyword': 'Keyword',
-        '$hashtag': 'Hashtag',
-        '$place': 'Place',
-        '$other': 'Other'
-      };
-
-      var otherFieldMap = {};
-      var _arr = ['instagram', 'twitter'];
-      for (var _i = 0; _i < _arr.length; _i++) {
-        var dataSrc = _arr[_i];var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = allFields[dataSrc][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var field = _step.value;
-
-            otherFieldMap[field] = dataSrc + ': ' + field;
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      }
-
-      return React.createElement(
-        'li',
-        { className: 'FilterCondition' },
-        React.createElement(LabeledSelect, { text: 'Field: ', optionMap: fieldOptionMap,
-          value: this.state.selectedField, name: this.props.nameSelectedField,
-          onChange: this.handleSelectedFieldChange }),
-        this.state.selectedField === '$other' && React.createElement(LabeledSelect, { optionMap: otherFieldMap, name: this.props.nameSelectedOtherField }),
-        React.createElement(LabeledInput, { text: 'Query: ', name: this.props.nameQuery }),
-        ['$keyword', '$hashtag'].includes(this.state.selectedField) && React.createElement(LabeledInput, { type: 'checkbox', text: 'Exact match',
-          labelPosition: 'after', name: this.props.nameCheckExactMatch })
-      );
-    }
-  }, {
-    key: 'handleSelectedFieldChange',
-    value: function handleSelectedFieldChange(e) {
-      this.setState({
-        selectedField: e.target.value
-      });
-    }
-  }]);
-
-  return _class;
-}(React.Component);
+};
 
 /***/ }),
 /* 37 */
@@ -21447,60 +21348,39 @@ module.exports = function (_React$Component) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const React = __webpack_require__(1);
+const FilterCondition = __webpack_require__(38);
+const clientConfig = __webpack_require__(11);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-
-var LabeledSelect = function (_React$Component) {
-  _inherits(LabeledSelect, _React$Component);
-
-  function LabeledSelect(props) {
-    _classCallCheck(this, LabeledSelect);
-
-    return _possibleConstructorReturn(this, (LabeledSelect.__proto__ || Object.getPrototypeOf(LabeledSelect)).call(this, props));
+module.exports = class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      numItems: clientConfig.initialNumConditions
+    };
   }
 
-  _createClass(LabeledSelect, [{
-    key: 'render',
-    value: function render() {
-      var options = [];
-      for (var option in this.props.optionMap) {
-        options.push(React.createElement(
-          'option',
-          { value: option, key: option },
-          this.props.optionMap[option]
-        ));
-      }
+  render() {
+    let conditionList = [];
+    for (let i = 1; i <= this.state.numItems; ++i) {
+      const props = {
+        key: `filterCondition${i}`,
+        nameSelectedField: `selectedField${i}`,
+        nameSelectedOtherField: `selectedOtherField${i}`,
+        nameCheckExactMatch: `exactMatch${i}`,
+        nameQuery: `queryString${i}`
+      };
 
-      return React.createElement(
-        'label',
-        null,
-        this.props.text,
-        React.createElement(
-          'select',
-          { value: this.props.value, name: this.props.name,
-            onChange: this.props.onChange && this.props.onChange.bind(this) },
-          options
-        )
-      );
+      conditionList.push(React.createElement(FilterCondition, props));
     }
-  }]);
 
-  return LabeledSelect;
-}(React.Component);
-
-LabeledSelect.defaultProps = {
-  text: '',
-  optionMap: {}
+    return React.createElement(
+      'ul',
+      { className: 'FilterConditionList' },
+      conditionList
+    );
+  }
 };
-
-module.exports = LabeledSelect;
 
 /***/ }),
 /* 38 */
@@ -21509,76 +21389,108 @@ module.exports = LabeledSelect;
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const React = __webpack_require__(1);
+const LabeledSelect = __webpack_require__(17);
+const LabeledInput = __webpack_require__(7);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+module.exports = class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedField: '$null'
+    };
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-var LabeledInput = __webpack_require__(15);
-var clientConfig = __webpack_require__(16);
-
-var _require = __webpack_require__(39),
-    capitalize = _require.capitalize;
-
-module.exports = function (_React$Component) {
-  _inherits(_class, _React$Component);
-
-  function _class() {
-    _classCallCheck(this, _class);
-
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+    this.handleSelectedFieldChange = this.handleSelectedFieldChange.bind(this);
   }
 
-  _createClass(_class, [{
-    key: 'render',
-    value: function render() {
-      var options = [];
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+  render() {
+    const fieldOptionMap = {
+      '$null': '-',
+      '$keyword': 'Keyword',
+      '$hashtag': 'Hashtag',
+      '$place': 'Place',
+      '$other': 'Other'
+    };
 
-      try {
-        for (var _iterator = clientConfig.dataSources[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var dataSrc = _step.value;
-
-          options.push(React.createElement(LabeledInput, { key: dataSrc,
-            type: 'checkbox', labelPosition: 'after',
-            text: capitalize(dataSrc) }));
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+    let otherFieldMap = {};
+    for (const dataSrc of ['instagram', 'twitter']) {
+      for (const field of allFields[dataSrc]) {
+        otherFieldMap[field] = `${dataSrc}: ${field}`;
       }
-
-      return React.createElement(
-        'span',
-        { className: 'DataSourceOption' },
-        'Data source: ',
-        options
-      );
     }
-  }]);
 
-  return _class;
-}(React.Component);
+    return React.createElement(
+      'li',
+      { className: 'FilterCondition' },
+      React.createElement(LabeledSelect, { text: 'Field: ', optionMap: fieldOptionMap,
+        value: this.state.selectedField, name: this.props.nameSelectedField,
+        onChange: this.handleSelectedFieldChange }),
+      React.createElement(
+        'span',
+        null,
+        ' '
+      ),
+      this.state.selectedField === '$other' && React.createElement(LabeledSelect, { optionMap: otherFieldMap, name: this.props.nameSelectedOtherField }),
+      React.createElement(
+        'span',
+        null,
+        ' '
+      ),
+      React.createElement(LabeledInput, { text: 'Query: ', name: this.props.nameQuery }),
+      React.createElement(
+        'span',
+        null,
+        ' '
+      ),
+      ['$keyword', '$hashtag'].includes(this.state.selectedField) && React.createElement(LabeledInput, { type: 'checkbox', text: 'Exact match',
+        labelPosition: 'after', name: this.props.nameCheckExactMatch })
+    );
+  }
+
+  handleSelectedFieldChange(e) {
+    this.setState({
+      selectedField: e.target.value
+    });
+  }
+};
 
 /***/ }),
 /* 39 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+const React = __webpack_require__(1);
+const LabeledInput = __webpack_require__(7);
+const clientConfig = __webpack_require__(11);
+
+const { capitalize } = __webpack_require__(40);
+
+module.exports = class extends React.Component {
+  render() {
+    let options = [];
+    for (const dataSrc of clientConfig.dataSources) {
+      options.push(React.createElement(LabeledInput, { key: dataSrc, name: `${dataSrc}Included`,
+        type: 'checkbox', text: capitalize(dataSrc),
+        labelPosition: 'after', defaultChecked: true }));
+    }
+
+    return React.createElement(
+      'span',
+      { className: 'DataSourceOption' },
+      'Data source: ',
+      options
+    );
+  }
+};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports.capitalize = function (str) {
   return str.charAt(0).toUpperCase() + str.slice(1);

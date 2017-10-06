@@ -1,11 +1,12 @@
+'use strict';
+
 const Express = require('express');
 const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 const path = require('path');
 
-const filterSearch = require('./modules/filter-search.js');
-const mongoSchema = require('./modules/mongo-schema.js');
-const utilities = require('./modules/utilities.js');
+const { Filter, Condition, Query } = require('./modules/filter.js');
+const { getMongoSchema } = require('./modules/schema.js');
 const serverConfig = require('./config/server.config.js');
 
 const app = new Express();
@@ -17,9 +18,14 @@ app.set('view engine', 'ejs');
 app.use(Express.static(path.resolve(__dirname, 'public')));
 
 app.use('/', async (req, res, next) => {
-  if (typeof app.get('dbs') !== 'undefined') return next();    
+  let dbs = app.get('dbs');
 
-  const dbs = {};
+  if (dbs) {
+    await openAll(dbs);
+    return next();
+  }
+
+  dbs = {};
   for (const dataSrc of serverConfig.dataSources) {
     dbs[dataSrc] = 
       await MongoClient.connect(serverConfig.mongoConnectionUrls[dataSrc]);
@@ -30,39 +36,54 @@ app.use('/', async (req, res, next) => {
 });
 
 app.get('/search', async (req, res) => {
-  res.locals.allFields = await getAllFields(app.get('dbs'));
+  const dbs = app.get('dbs');
 
+  res.locals.allFields = await getAllFields(dbs);
+
+  await closeAll(dbs);
   res.render('index');
 });
 
 app.post('/result', async (req, res) => {
-  const filter = new filterSearch.filterSearch.Filter(req.body.logicalOperator);
+  const dbs = app.get('dbs');
 
-  for (let i = 1; i <= serverConfig.numfilterSearch.Conditions; ++i) {
-    const conditionField = req.body[`conditionField${i}`];
-    if (conditionField === 'null') break;
+  const filter = new Filter(req.body.andOrOption);
+
+  for (let i = 1; true; ++i) {
+    const selectedField = req.body[`selectedField${i}`];
+    if (!selectedField) break;
+    if (selectedField === '$null') continue;
 
 
     const isExactMatch = req.body[`exactMatch${i}`] === 'on';
-    const condition = new filterSearch.filterSearch.Condition(
-      conditionField,
-      req.body[`conditionfilterSearch.Query${i}`],
+    const condition = new Condition(
+      selectedField,
+      req.body[`queryString${i}`],
       {exact: isExactMatch}
     );
-    filter.addfilterSearch.Condition(condition);
+    filter.addCondition(condition);
   }
 
-  const dateRange = null;
-  const query = new filterSearch.filterSearch.Query(app.get('dbs'), filter, dateRange);
-
-  const results = {};
-
-  for (const dataSrc of serverConfig.dataSources) {
-    results[dataSrc] = await query[`find${utilities.capitalize(dataSrc)}`]();
+  const { fromDate, toDate } = req.body;
+  const dateRange = {
+    from: fromDate ? new Date(`${fromDate}UTC`) : null,
+    to: toDate ? new Date(`${toDate}UTC`) : null,
   };
 
-  res.send(`Instagram: ${results.instagram.length}  Twitter: ${JSON.stringify(results.twitterlength)}`);
-  console.log(req.body);
+  const query = new Query(dbs, filter, dateRange);
+
+  const results = {};
+  const resultLimit = parseInt(req.body.resultLimit);
+
+  for (const dataSrc of serverConfig.dataSources) {
+      results[dataSrc] = 
+        (req.body[`${dataSrc}Included`] === 'on') ?
+        await query.find[dataSrc](resultLimit) :
+        [];
+  };
+
+  await closeAll(dbs);
+  res.send(`Instagram: ${results.instagram.length}  Twitter: ${results.twitter.length}`);
 });
 
 app.use((req, res, next) => {
@@ -82,12 +103,32 @@ app.use((err, req, res, next) => {
 async function getAllFields(dbs) {
   const allFields = {};
   for (const dataSrc of serverConfig.dataSources) {
-    allFields[dataSrc] = await mongoSchema.getMongoSchema(
+    allFields[dataSrc] = await getMongoSchema(
       dbs[dataSrc].collection(serverConfig.collectionNames[dataSrc])
     );
   }
 
   return allFields;
+}
+
+async function openAll(dbs) {
+  if (!dbs) return;
+
+  for (const dataSrc in dbs) {
+    if (!dbs[dataSrc].serverConfig.isConnected()) {
+      await dbs[dataSrc].open();
+    }
+  }
+}
+
+async function closeAll(dbs) {
+  if (!dbs) return;
+
+  for (const dataSrc in dbs) {
+    if (dbs[dataSrc].serverConfig.isConnected()) {
+      await dbs[dataSrc].close();
+    }
+  }
 }
 
 module.exports = app;
