@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default class LabeledSelect extends React.Component {
+class LabeledSelect extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -27,4 +27,6 @@ export default class LabeledSelect extends React.Component {
 LabeledSelect.defaultProps = {
   text: '',
   optionMap: {}
-}
+};
+
+module.exports = LabeledSelect;

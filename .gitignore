@@ -1,9 +1,3 @@
-#Build results
-build
-
-# Tests
-tests
-
 # Logs
 logs
 *.log

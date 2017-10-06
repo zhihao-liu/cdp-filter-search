@@ -1,21 +1,19 @@
-'use strict';
-
 const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
-  entry: path.join(__dirname, 'client/index.jsx'),
+module.exports = { 
+  entry: path.resolve(__dirname, 'client/index.jsx'),
   output: {
-    path: path.join(__dirname, 'public/js'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'public/js'),
+    filename: 'client.bundle.js'
   },
   module: {
     loaders: [{
-      test: [/\.js$/, /\.jsx$/],
-      exclude: /node_modules/,
+      test: [ /\.js$/, /\.jsx$/ ],
+      include: [ /lib/, /client/ ],
       loader: 'babel-loader',
       query: {
-        presets: ['react', 'es2015']
+        presets: [ 'react' ]
       }
     }]
   }

@@ -1,15 +1,4 @@
-'use strict';
-
 const _ = require('underscore');
-
-export async function getMongoSchema(mongoCollection, numSampleObjs = 20) {
-  let schema = {};
-
-  const sampleObjs = await mongoCollection.find().limit(numSampleObjs).toArray();
-  for (const obj of sampleObjs) buildObjSchema(obj, schema, ['_id']);
-
-  return schema;
-}
 
 function buildObjSchema(obj, schema, ignoredProps = []) {
   if (Array.isArray(obj)) obj = obj[0];
@@ -26,7 +15,7 @@ function buildObjSchema(obj, schema, ignoredProps = []) {
   }
 }
 
-export function getAllPropPaths(obj, prePath = '') {
+function getAllPropPaths(obj, prePath = '') {
   let result = [];
 
   if (_.isEmpty(obj)) {
@@ -37,3 +26,12 @@ export function getAllPropPaths(obj, prePath = '') {
   
   return result;
 }
+
+module.exports.getMongoSchema = async function (mongoCollection, numSampleObjs = 20) {
+  let schema = {};
+
+  const sampleObjs = await mongoCollection.find().limit(numSampleObjs).toArray();
+  for (const obj of sampleObjs) buildObjSchema(obj, schema, ['_id']);
+
+  return getAllPropPaths(schema);
+};

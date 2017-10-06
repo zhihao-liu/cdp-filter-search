@@ -1,13 +1,12 @@
-import React from 'react';
+const React = require('react');
 
-export default class LabeledInput extends React.Component {
+class LabeledInput extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const isLabeledAfter = 
-      this.props.labelPosition === 'after' ? true : false;
+    const isLabeledAfter = this.props.labelPosition === 'after';
 
     return (
       <label>
@@ -22,4 +21,6 @@ export default class LabeledInput extends React.Component {
 LabeledInput.defaultProps = {
   text: '',
   labelPosition: 'before'
-}
+};
+
+module.exports = LabeledInput;

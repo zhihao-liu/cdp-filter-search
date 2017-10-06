@@ -1,8 +1,8 @@
-import React from 'react';
-import FilterConditionList from './FilterConditionList.jsx';
-import DataSourceOption from './DataSourceOption.jsx';
+const React = require ('react');
+const FilterConditionList = require ('./FilterConditionList.jsx');
+const DataSourceOption = require ('./DataSourceOption.jsx');
 
-export default class SearchLayout extends React.Component {
+module.exports = class extends React.Component {
   render() {
     return (
       <form action='result' method='post'>
@@ -14,4 +14,4 @@ export default class SearchLayout extends React.Component {
       </form>
     );
   }
-}
+};

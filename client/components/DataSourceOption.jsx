@@ -1,17 +1,17 @@
-import React from 'react';
-import LabeledInput from './LabeledInput.jsx';
-import { dataSources } from '../client.config.js'
+const React = require('react');
+const LabeledInput = require('./LabeledInput.jsx');
+const clientConfig = require('../../config/client.config.js');
 
-const utilities = require('../../lib/utilities');
+const { capitalize } = require('../../modules/utilities');
 
-export default class DataSourceOption extends React.Component {
+module.exports = class extends React.Component {
   render() {
     let options = [];
-    for (const dataSrc of dataSources) {
+    for (const dataSrc of clientConfig.dataSources) {
       options.push(
         <LabeledInput key={dataSrc}
                       type='checkbox' labelPosition='after'
-                      text={utilities.capitalize(dataSrc)} />
+                      text={capitalize(dataSrc)} />
       );
     }
 
@@ -19,4 +19,4 @@ export default class DataSourceOption extends React.Component {
       <span className='DataSourceOption'>{'Data source: '}{options}</span>
     );
   }
-}
+};

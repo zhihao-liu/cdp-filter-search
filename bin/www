@@ -1,10 +1,10 @@
-import app from '../app.js';
+const app = require('../app.js');
 
-import http from 'http';
-import { defaultServerPort } from '../server.config.js';
+const http = require('http');
+const serverConfig = require('../config/server.config.js');
 
 const server = http.createServer(app);
-const port = process.env.PORT || defaultServerPort;
+const port = process.env.PORT || serverConfig.defaultServerPort;
 server.listen(port);
 
 server.on('error', err => console.log(`Error when creating server: ${err}`));

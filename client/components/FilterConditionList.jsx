@@ -1,12 +1,12 @@
-import React from 'react';
-import FilterCondition from './FilterCondition.jsx';
-import { initialNumConditions } from '../client.config.js'
+const React = require('react');
+const FilterCondition = require('./FilterCondition.jsx');
+const clientConfig = require('../../config/client.config.js');
 
-export default class FilterConditionList extends React.Component {
+module.exports = class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numItems: initialNumConditions
+      numItems: clientConfig.initialNumConditions
     };
   } 
 
@@ -28,4 +28,4 @@ export default class FilterConditionList extends React.Component {
       <ul className='FilterConditionList'>{conditionList}</ul>
     );
   }
-}
+};

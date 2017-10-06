@@ -5,7 +5,7 @@ const earliestDate = {
   twitter: new Date('2016-06-25 UTC')
 };
 
-export class Condition {
+module.exports.Condition = class {
   constructor(field, value, option) {
     this.field = field || {};
     this.value = value || {};
@@ -53,9 +53,9 @@ export class Condition {
       return {[this.field]: this.value};     
     }
   }
-}
+};
 
-export class Filter {
+module.exports.Filter = class {
   constructor(logicalOperator) {
     this.logicalOperator = logicalOperator || {};
     this.conditionList = [];
@@ -73,9 +73,9 @@ export class Filter {
   get queryTwitter() {
     return {[this.logicalOperator]: this.conditionList.map(item => item.queryTwitter)};
   }
-}
+};
 
-export class Query {
+module.exports.Query = class {
   constructor (dbs, filter, dateRange) {
     this.dbs = dbs || {};
     this.filter = filter || {};
@@ -96,12 +96,9 @@ export class Query {
 
     console.log(JSON.stringify(dateQuery));
 
-    const result = 
-      await this.dbs.instagram.collection('posts')
-        .find({$and: [dateQuery, this.filter.queryInstagram]})
-        .limit(limit).toArray();
-
-    return result;
+    return await this.dbs.instagram.collection('posts')
+      .find({$and: [dateQuery, this.filter.queryInstagram]})
+      .limit(limit).toArray();
     
   }
 
@@ -132,4 +129,4 @@ export class Query {
 
     return result;
   }
-}
+};

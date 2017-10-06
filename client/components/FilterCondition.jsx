@@ -1,8 +1,8 @@
-import React from 'react';
-import LabeledSelect from './LabeledSelect.jsx';
-import LabeledInput from './LabeledInput.jsx';
+const React = require('react');
+const LabeledSelect = require('./LabeledSelect.jsx');
+const LabeledInput = require('./LabeledInput.jsx');
 
-export default class FilterCondition extends React.Component {
+module.exports = class extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
@@ -23,7 +23,7 @@ export default class FilterCondition extends React.Component {
 
     let otherFieldMap = {};
     for (const dataSrc of ['instagram', 'twitter']) {
-      for (const field of locals.allFields[dataSrc]) {
+      for (const field of allFields[dataSrc]) {
         otherFieldMap[field] = `${dataSrc}: ${field}`;
       }
     }
@@ -51,4 +51,4 @@ export default class FilterCondition extends React.Component {
       selectedField: e.target.value
     });
   }
-}
+};
