@@ -9,7 +9,7 @@ A module of City Digital Pulse (University of Ottawa - MCRLab) for searching doc
 `$ brew install mongodb`
 3. Install Yarn:  
 `$ npm install yarn`
-> **Note**: You can use npm instead although I strongly recommend Yarn.  
+> **Note**: Please use Yarn instead of pure NPM.  
 4. Open terminal in the project folder.  
 5. Install all node dependencies:  
 `$ yarn install`  
